@@ -14,6 +14,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import { NavbarComponent } from './partials/navbar/navbar.component';
 import { SidenavComponent } from './partials/sidenav/sidenav.component';
+import { PageHeaderComponent } from './partials/page-header/page-header.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SidenavComponent } from './partials/sidenav/sidenav.component';
     HomeScreenComponent,
     LoginScreenComponent,
     NavbarComponent,
-    SidenavComponent
+    SidenavComponent,
+    PageHeaderComponent
   ],
   imports: [
     BrowserModule,
