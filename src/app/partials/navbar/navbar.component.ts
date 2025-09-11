@@ -11,6 +11,9 @@ import { User } from '../../models/user.model';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
+showPage(arg0: string) {
+throw new Error('Method not implemented.');
+}
   /** Controla si el sidenav está abierto (se enlaza en el template)*/
   public isSidenavOpen: boolean = false;
 
