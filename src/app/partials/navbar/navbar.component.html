@@ -1,11 +1,17 @@
 <header class="app-navbar">
   <nav class="navbar">
     <div class="navbar-brand-container">
-      <button class="hamburguer">
-
+      <button class="hamburguer"
+        aria-label="Menu principal"
+        [attr.aria-expanded]="isSidenavOpen"
+        (click)="toggleSidenav()">
+        <i class="fas fa-bars"></i>
       </button>
 
+      <a class="navbar-brand" (click)="showPage('home')">
+        <i class="fas fa-dragon"></i>
+        <span class="brand-text">DBZ Encyclopedia</span>
+      </a>
     </div>
   </nav>
-
 </header>

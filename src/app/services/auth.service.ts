@@ -1,9 +1,26 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  public readonly currentUser$ = new BehaviorSubject<User | null>(null);
+
   constructor() { }
+
+  // Ejemplo de login que establece el usurario con rol:
+  loginDemoAdmnin(): void {
+    this.currentUser$.next({
+      id: 1,
+      name: 'Admin',
+      email: 'admin@dbz.dev',
+      role: 'admin'
+    });
+  }
+
+  logout(): void {
+    this.currentUser$.next(null);
+  }
 }

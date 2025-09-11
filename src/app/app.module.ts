@@ -13,13 +13,15 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatIconModule} from '@angular/material/icon';
 import { NavbarComponent } from './partials/navbar/navbar.component';
+import { SidenavComponent } from './partials/sidenav/sidenav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeScreenComponent,
     LoginScreenComponent,
-    NavbarComponent
+    NavbarComponent,
+    SidenavComponent
   ],
   imports: [
     BrowserModule,

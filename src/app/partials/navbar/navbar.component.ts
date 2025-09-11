@@ -1,34 +1,77 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
-import { Router } from 'express';
+import { SidenavService } from '../../services/sidenav.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit , OnDestroy{
-
+export class NavbarComponent implements OnInit, OnDestroy {
+  /** Controla si el sidenav está abierto (se enlaza en el template)*/
   public isSidenavOpen: boolean = false;
 
-  public currentPage: string = '';
+  /** Página actualmente activa (para maracar el enlace "active") */
+  public currentPage: string = 'home';
 
-  //public currentUser: any = null;
+  /** Datos del usuario autenticado; null si no hay sesión */
+  public currentUser: User | null = null;
 
+  /** Suscripciones para limpiar en ngOnDestroy */
   private userSub!: Subscription;
   private sidenavSub!: Subscription;
 
-  constructor (
+  constructor(
     private readonly router: Router,
-    private readonly AuthService: AuthService,
-    private readonly sidenavService: sidenavService,
-  ) {};
+    private readonly authService: AuthService,
+    private readonly sidenavService: SidenavService
+  ) { }
 
-  ngOnInit(): void {}
+  /** Se ejecuta al montar el componente */
+  public ngOnInit(): void {
+    // 1) Escucha cambios de usuario
+    this.userSub = this.authService.currentUser$
+      .subscribe((user: User | null) => this.currentUser = user);
 
-  ngOnDestroy(): void {}
+    // 2) Sincroniza el estado abierto/cerrado del sidenav
+    this.sidenavSub = this.sidenavService.open$
+      .subscribe((open: boolean) => this.isSidenavOpen = open);
 
+    // 3) Maraca al iniciar la ruta activa
+    const path = this.router.url.split('/')[1];
+    this.currentPage = path || 'home';
+  }
+
+  /** Se ejecuta al destruir el componente */
+  public ngOnDestroy(): void {
+    this.userSub.unsubscribe();
+    this.sidenavSub.unsubscribe();
+  }
+
+  /** Dispara el toggle del sidenav en el servicio */
+  public toggleSidenav(): void {
+    this.sidenavService.toggle();
+  }
+
+  /**
+   * Navega a la ruta indicada y marca el enlace como activo
+   * (no cierra el sidenav aquí, lo manejará el propio componente sidenav en mobile)
+   */
+  public navigateTo(page: string): void {
+    this.currentPage = page;
+    this.router.navigate([`/${page}`]);
+  }
+
+  /**
+   * Si hay sesión, cierra sesión y siempre a login
+   */
+  public toggleAuth(): void {
+    if (this.currentUser) {
+      this.authService.logout();
+    }
+    this.router.navigate(['/login']);
+  }
 }
-
-
