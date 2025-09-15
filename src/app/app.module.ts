@@ -15,6 +15,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { NavbarComponent } from './partials/navbar/navbar.component';
 import { SidenavComponent } from './partials/sidenav/sidenav.component';
 import { PageHeaderComponent } from './partials/page-header/page-header.component';
+import { FooterComponent } from './partials/footer/footer.component';
+import { LoadingSpinerComponent } from './partial/loading-spiner/loading-spiner.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { PageHeaderComponent } from './partials/page-header/page-header.componen
     LoginScreenComponent,
     NavbarComponent,
     SidenavComponent,
-    PageHeaderComponent
+    PageHeaderComponent,
+    FooterComponent,
+    LoadingSpinerComponent
   ],
   imports: [
     BrowserModule,
